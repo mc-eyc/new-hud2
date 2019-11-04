@@ -4,48 +4,103 @@ import styled from "styled-components";
 const StyledText = styled.svg`
     overflow: visible;
 
-    path {
-        fill: red;
-    }
-
     text {
         text-align: center;
         text-anchor: middle;
     }
 `;
 
+export class ST extends React.Component {
+    componentDidMount() {
+        this.textRenderer = document.createElement("span");
+        this.ref = React.createRef();
+    }
+
+    componentWillUnmount() {
+        document.body.removeChild(this.textRenderer);
+        this.textRenderer = null;
+        this.ref = null;
+    }
+
+    render() {
+        return <StyledText>{this.props.children}</StyledText>;
+    }
+
+    static getViewBox(str, elem, widthCoef = 1.1, heightCoef = 1) {
+        elem.innerText = str;
+        return `0 0 ${elem.offsetWidth * widthCoef} ${elem.offsetHeight * heightCoef}`;
+    }
+
+    static getStyles(elem) {
+        const styles = window.getComputedStyle(elem);
+        return {
+            fontFamily: styles.fontFamily,
+            fontSize: styles.fontSize,
+            fontWeight: styles.fontWeight,
+        };
+    }
+}
+
 export default function ScaledText(props) {
+    const textRef = useRef(null);
     const str = props.children.toString();
-    const viewBox = useMemo(() => getViewBox(str), [str]);
+    const [textRenderer, setTextRenderer] = useState(null);
+
+    // Initialise the off screen text renderer as well as provide for its removal
+    useEffect(() => {
+        if (textRef.current) {
+            const elem = createTextRenderer(textRef.current);
+            document.body.appendChild(elem);
+            setTextRenderer(elem);
+
+            return () => {
+                document.body.removeChild(elem);
+                setTextRenderer(null);
+            };
+        }
+    }, []);
+
+    // Calculate the new viewbox whenever the string changes
+    const viewBox = useMemo(() => {
+        return getViewBox(str, textRenderer);
+    }, [str, textRenderer]);
 
     return (
         <StyledText className="scaled-text" width="100%" height="100%" viewBox={viewBox}>
-            <text x="50%" y="50%" alignmentBaseline="central" dominantBaseline="central">
+            <text x="50%" y="50%" alignmentBaseline="central" dominantBaseline="central" ref={textRef}>
                 {str}
             </text>
         </StyledText>
     );
 }
 
-const getViewBox = (str) => {
-  let elem = document.createElement("span");
-  elem.style.fontFamily = "Open Sans";
-  elem.style.fontSize = "1em";
-  elem.style.visibility = "hidden";
-  elem.style.margin = "0px";
-  elem.style.padding = "0px";
-  elem.style.boxSizing = "border-box";
-  elem.style.textAlign = "center";
+const createTextRenderer = ref => {
+    const textRenderer = document.createElement("span");
+    textRenderer.style.visibility = "hidden";
+    textRenderer.style.position = "absolute";
+    textRenderer.style.margin = textRenderer.style.padding = textRenderer.style.top = textRenderer.style.left = "0px";
+    textRenderer.style.boxSizing = "border-box";
+    textRenderer.style.textAlign = "center";
 
-  elem.innerText = str
+    if (ref) {
+        applyStyles(textRenderer, window.getComputedStyle(ref));
+    }
 
-  document.body.appendChild(elem);
+    return textRenderer;
+};
 
-  const width = elem.offsetWidth * 1.1;
-  const height = elem.offsetHeight;
+const applyStyles = (target, styles) => {
+    target.style.fontFamily = styles.fontFamily;
+    target.style.fontWeight = styles.fontWeight;
+    target.style.fontSize = styles.fontSize;
+    return target;
+};
 
-  document.body.removeChild(elem);
-  elem = null;
-
-  return `0 0 ${width} ${height}`;
+const getViewBox = (str, renderer, wcoef = 1.1, hcoef = 1) => {
+    if (str && renderer) {
+        renderer.innerText = str;
+        return `0 0 ${renderer.offsetWidth * wcoef} ${renderer.offsetHeight * hcoef}`;
+    } else {
+        return `0 0 0 0`;
+    }
 };
