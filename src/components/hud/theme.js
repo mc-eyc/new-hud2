@@ -9,7 +9,6 @@ import styled from "styled-components";
  */
 export default function StyledTheme(HUD) {
     return styled(HUD)`
-        font-size: 64px;
         font-family: Open Sans, sans-serif;
 
         .body {
@@ -22,20 +21,20 @@ export default function StyledTheme(HUD) {
 
         .balance {
             .title {
-                font-size: 80%;
                 color: ${props => props.theme.balance.title.color};
+                fill: ${props => props.theme.balance.title.color};
                 font-family: ${props => props.theme.balance.title.fontFamily};
             }
 
             .value {
-                font-size: 90%;
                 color: ${props => props.theme.balance.value.color};
+                fill: ${props => props.theme.balance.value.color};
                 font-family: ${props => props.theme.balance.value.fontFamily};
             }
         }
 
         .clock {
-            font-size: 20%;
+            font-size: 0.7em;
             color: ${props => props.theme.clock.color};
             font-family: ${props => props.theme.clock.fontFamily};
         }

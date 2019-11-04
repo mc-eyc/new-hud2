@@ -1,26 +1,44 @@
 import React from "react";
 import styled from "styled-components";
 
+import ScaledText from "../common/scaled-text";
+
 const StyledBalance = styled.div`
-  text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  header {
-    text-transform: uppercase;
-    align-self: flex-end;
-    justify-self: center;
-    font-weight: bold;
-  }
+    .title, .value {
+        width: 100%;
+        text-align: center;
+    }
 
-  .value {
-    align-self: flex-start;
-  }
+    .title {
+        text-transform: uppercase;
+        font-weight: bold;
+        flex-basis: 40%;
+        height: 40%;
+        //border: 1px solid red;
+    }
+
+    .value {
+        flex-basis: 60%;
+        height: 60%;
+        //border: 1px solid blue;
+    }
 `;
 
 export default function Balance({ title, value }) {
-  return (
-    <StyledBalance className="balance">
-      <header className="title">{title}</header>
-      <div className="value">{value}</div>
-    </StyledBalance>
-  );
+    return (
+        <StyledBalance className="balance">
+            <div className="title">
+                <ScaledText>{title}</ScaledText>
+            </div>
+            <div className="value">
+                <ScaledText>{value}</ScaledText>
+            </div>
+        </StyledBalance>
+    );
 }

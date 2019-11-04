@@ -9,16 +9,10 @@ const StyledLayout = styled.svg.attrs(props => ({
     style: {
         width: props.width,
         height: props.height,
-        fontSize: props.height,
     },
 }))`
     .balances {
-        align-items: center;
         height: 100%;
-        
-        .title {
-            white-space: nowrap;
-        }
     }
 `;
 
@@ -32,7 +26,7 @@ export default function MiniLayout(props) {
             <path className="body" d={genPath(width, height)} />
             <path className="border" d={genBorder(width, height)} />
             <foreignObject width={width - baseSize} height={baseSize} x={0} y={0}>
-                <Balances balances={balances} minFont={1} maxFont={14} />
+                <Balances balances={balances} />
             </foreignObject>
             <foreignObject width={baseSize} height={baseSize} x={width - baseSize} y={0}>
                 <Buttons buttons={buttons} size={baseSize} />

@@ -34,7 +34,7 @@ const StyledWindow = styled(Rnd)`
 `;
 
 export function Window(props) {
-    const [baseWidth, baseHeight] = [433, 865];
+    const [baseWidth, baseHeight] = [800, 600];
     const [gameGeom, setGameGeom] = useState({ width: baseWidth, height: baseHeight });
     return (
         <StyledWindow

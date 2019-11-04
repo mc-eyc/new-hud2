@@ -28,11 +28,13 @@ const StyledLayout = styled.svg.attrs(props => ({
     }
 
     .balances:first-child {
+        height: 60%;
         font-size: 90%;
         margin-bottom: 4px;
     }
 
     .balances:last-child {
+        height: 40%;
         font-size: 60%;
         justify-content: center;
     }
@@ -75,8 +77,8 @@ export default function PortraitLayout(props) {
                 debug={true}
                 x={baseSize / 2}
                 y={Math.max(baseY * 2)}>
-                <Balances balances={balances.top} minFont={10} maxFont={20} />
-                <Balances balances={balances.bottom} minFont={balances.bottom.length > 3 ? 6 : 9} maxFont={11} />
+                <Balances balances={balances.top} />
+                <Balances balances={balances.bottom} />
             </Container>
             <Container width={baseSize} height={height} x={width - baseSize / 2} y={baseY + baseSize / 4}>
                 <Buttons buttons={buttons.right} size={baseSize / 2} />
