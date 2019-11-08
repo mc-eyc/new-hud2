@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import svgpath from "svgpath";
 
-import Balances from "../balances";
-import Buttons from "../buttons";
+import Balances from "../../balances";
+import Buttons from "../../buttons";
 
 const StyledLayout = styled.svg.attrs(props => ({
     style: {
@@ -17,8 +17,8 @@ const StyledLayout = styled.svg.attrs(props => ({
 `;
 
 export default function MiniLayout(props) {
-    const { balances, width, game } = props;
-    const height = Math.min(game.height, 32);
+    const { balances, width } = props;
+    const height = 32;
     const baseSize = height;
     const buttons = sortButtons(props.buttons);
     return (
@@ -34,6 +34,16 @@ export default function MiniLayout(props) {
         </StyledLayout>
     );
 }
+
+MiniLayout.gameBounds = ({width, height}) => {
+    return {
+        width,
+        height: height - 32 - 2,
+        x: 0,
+        y: 0,
+    };
+};
+
 
 const genPath = (width, height) => {
     const points = [`M 0 0`, `L ${width} 0`, `L ${width} ${height}`, `L 0 ${height}`];

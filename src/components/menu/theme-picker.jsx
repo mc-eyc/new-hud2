@@ -12,6 +12,7 @@ const StyledThemePicker = styled.div`
 
     label {
         cursor: pointer;
+        white-space: nowrap;
 
         &:hover {
             text-decoration: underline;

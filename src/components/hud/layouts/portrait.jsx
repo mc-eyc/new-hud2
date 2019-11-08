@@ -2,10 +2,10 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import svgpath from "svgpath";
 
-import Container from "../common/container";
-import Clock from "../clock";
-import Balances from "../balances";
-import Buttons from "../buttons";
+import Container from "../../common/container";
+import Clock from "../../clock";
+import Balances from "../../balances";
+import Buttons from "../../buttons";
 
 const StyledLayout = styled.svg.attrs(props => ({
     style: {
@@ -41,9 +41,9 @@ const StyledLayout = styled.svg.attrs(props => ({
 `;
 
 export default function PortraitLayout(props) {
-    const { clock, width, game } = props;
+    const { clock, width } = props;
 
-    const height = Math.min(game.height, 96);
+    const height = 96;
 
     const baseSize = height;
 
@@ -90,6 +90,15 @@ export default function PortraitLayout(props) {
 PortraitLayout.defaultProps = {
     baseSize: 64,
     stroke: 2,
+};
+
+PortraitLayout.gameBounds = ({width, height}) => {
+    return {
+        width,
+        height: height - 96 - 2,
+        x: 0,
+        y: 0,
+    };
 };
 
 const genPath = ({ width, height }, baseSize, clock = false) => {

@@ -10,14 +10,50 @@ const StyledMenu = styled.div`
     font-size: 1em;
     font-weight: bold;
     color: white;
+    display: grid;
+    grid-template-areas: "theme ui clock" "theme ui buttons";
+
+    section {
+        fieldset,
+        form {
+            display: flex;
+            align-items: center;
+        }
+    }
 
     label {
         text-transform: uppercase;
         margin-right: 1em;
     }
+
+    .theme {
+        grid-area: theme;
+    }
+
+    .ui {
+        grid-area: ui;
+    }
+
+    .clock {
+        grid-area: clock;
+    }
+
+    .buttons {
+        grid-area: buttons;
+    }
 `;
 
-export function Menu({ clock, buttons, updateButton, updateClock }) {
+export function Menu({
+    clock,
+    buttons,
+    updateButton,
+    updateClock,
+    setUIAuto,
+    setUIPlatform,
+    setUIInverted,
+    updateUILayout,
+    ui,
+}) {
     return (
         <StyledMenu className="menu">
             <section className="theme">
@@ -29,6 +65,21 @@ export function Menu({ clock, buttons, updateButton, updateClock }) {
                     <ThemePicker label="Balance Value" prop="balance.value.color" />
                     <ThemePicker label="Clock" prop="clock.color" />
                     <ThemePicker label="Border" prop="border.color" />
+                    <ThemePicker label="UI Foreground" prop="ui.color" />
+                    <ThemePicker label="UI Background" prop="ui.background" />
+                </fieldset>
+            </section>
+            <section className="ui">
+                <fieldset>
+                    <legend>UI</legend>
+                    <form>
+                        <input type="checkbox" checked={ui.auto} onChange={e => setUIAuto(e.target.checked)} />
+                        <label>Auto</label>
+                        <input type="checkbox" checked={ui.platform === "mobile"} onChange={e => setUIPlatform(e.target.checked ? "mobile" : "desktop")} />
+                        <label>Mobile</label>
+                        <input type="checkbox" checked={ui.inverted} onChange={e => setUIInverted(e.target.checked)} />
+                        <label>Inverted</label>
+                    </form>
                 </fieldset>
             </section>
             <section className="clock">
@@ -45,12 +96,7 @@ export function Menu({ clock, buttons, updateButton, updateClock }) {
                     <legend>Buttons</legend>
                     <form>
                         {Object.keys(buttons).map(b => (
-                            <ButtonManager
-                                key={`bm-${b}`}
-                                button={b}
-                                value={buttons[b]}
-                                onChange={updateButton}
-                            />
+                            <ButtonManager key={`bm-${b}`} button={b} value={buttons[b]} onChange={updateButton} />
                         ))}
                     </form>
                 </fieldset>
@@ -70,7 +116,12 @@ Menu.defaultProps = {
 const ButtonManager = ({ button, value, onChange }) => {
     return (
         <>
-            <input name={`btn-${button}`} type="checkbox" checked={value} onChange={e => onChange(button, e.target.checked)} />
+            <input
+                name={`btn-${button}`}
+                type="checkbox"
+                checked={value}
+                onChange={e => onChange(button, e.target.checked)}
+            />
             <label htmlFor={`btn-${button}`}>{button}</label>
         </>
     );
@@ -81,5 +132,9 @@ export default connect(
     dispatch => ({
         updateClock: value => dispatch({ type: "clock.update", value }),
         updateButton: (button, value) => dispatch({ type: "buttons.update", button, value }),
+        setUIAuto: auto => dispatch({ type: "ui.setAuto", auto }),
+        setUIPlatform: platform => dispatch({ type: "ui.setPlatform", platform }),
+        setUIInverted: inverted => dispatch({ type: "ui.setInverted", inverted }),
+        updateUILayout: opts => dispatch({ type: "ui.updateLayout", ...opts }),
     })
 )(Menu);

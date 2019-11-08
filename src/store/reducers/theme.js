@@ -31,6 +31,11 @@ const defaultTheme = {
     // Border
     border: {
         color: "black",
+    },
+    // UI
+    ui: {
+        color: "white",
+        background: "rgba(0, 0, 0, 0.95)",
     }
 };
 

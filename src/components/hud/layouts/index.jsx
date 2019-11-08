@@ -12,8 +12,15 @@ import Mini from "./mini";
  * own width and height regardless of the game.
  */
 export default function Layouts(props) {
-    const { game } = props;
-    const Layout = chooseLayout(game.width, game.height);
+    const { parent, updateGameBounds } = props;
+    const Layout = chooseLayout(parent.width, parent.height);
+
+    React.useEffect(() => {
+        if (updateGameBounds) {
+            updateGameBounds(Layout.gameBounds(parent));
+        }
+    }, [parent, Layout, updateGameBounds]);
+
     return (
         <>
             <Layout {...props} />
@@ -22,7 +29,7 @@ export default function Layouts(props) {
 }
 
 // Determine the orientation of the HUD
-const orientation = (w, h) => h > w && h >= 400 ? "portrait" : "landscape";
+const orientation = (w, h) => (h > w && h >= 400 ? "portrait" : "landscape");
 
 // Determine which HUD to display
 const chooseLayout = (w, h) => {
@@ -49,16 +56,17 @@ const chooseLayout = (w, h) => {
 Layouts.propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
-    game: PropTypes.shape({
+    parent: PropTypes.shape({
         width: PropTypes.number.isRequired,
         height: PropTypes.number.isRequired,
     }).isRequired,
+    updateGameBounds: PropTypes.func,
 };
 
 Layouts.defaultProps = {
     width: 0,
     height: 0,
-    game: {
+    parent: {
         width: 0,
         height: 0,
     },

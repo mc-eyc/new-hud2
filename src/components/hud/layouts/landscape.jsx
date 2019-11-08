@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import svgpath from "svgpath";
 
-import Balances from "../balances";
-import Buttons from "../buttons";
-import Clock from "../clock";
-import Container from "../common/container";
-import { balancesType, balancesDefaultType, longestBalanceString } from "../../utils";
+import Balances from "../../balances";
+import Buttons from "../../buttons";
+import Clock from "../../clock";
+import Container from "../../common/container";
+import { balancesType, balancesDefaultType, longestBalanceString } from "../../../utils";
 
 const StyledLayout = styled.svg.attrs(props => ({
     style: {
@@ -47,9 +47,9 @@ const StyledLayout = styled.svg.attrs(props => ({
 
 export default function Landscape(props) {
     // Props
-    const { width, game, baseSize, clock, balances } = props;
+    const { width, baseSize, clock, balances } = props;
 
-    const height = Math.min(game.height, 64);
+    const height = 64;
 
     const buttons = sortButtons(props.buttons);
 
@@ -162,6 +162,15 @@ Landscape.defaultProps = {
     buttons: {},
     clock: false,
     ...balancesDefaultType,
+};
+
+Landscape.gameBounds = ({width, height}) => {
+    return {
+        width,
+        height: height - 64 - 2,
+        x: 0,
+        y: 0,
+    };
 };
 
 const genPath = ({ width, height }, baseHeight, leftOffset, rightOffset) => {

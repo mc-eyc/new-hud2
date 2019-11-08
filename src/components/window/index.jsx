@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { Rnd } from "react-rnd";
 
 import HUD from "../hud";
+import UI from "../ui";
+import Screens from "../screens";
+import Cradle from "../cradle";
 
 const StyledWindow = styled(Rnd)`
     background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
@@ -11,6 +14,8 @@ const StyledWindow = styled(Rnd)`
         linear-gradient(-45deg, transparent 75%, #808080 75%);
     background-size: 20px 20px;
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    border-radius: 0.5em;
+    overflow: hidden;
 
     .size {
         position: absolute;
@@ -51,19 +56,16 @@ export function Window(props) {
             <div className="size">
                 {gameGeom.width} x {gameGeom.height}
             </div>
-            <IHUD
-                balances={props.balances}
-                buttons={props.buttons}
-                theme={props.theme}
-                clock={props.clock}
-                game={gameGeom}
-            />
+            <Cradle {...props} parent={gameGeom} />
         </StyledWindow>
     );
 }
 
-function IHUD({ balances, buttons, theme, game, clock = false }) {
-    return <HUD balances={balances} buttons={buttons} theme={theme} clock={clock} game={game} />;
-}
-
-export default connect(state => state)(Window);
+export default connect(
+    state => state,
+    dispatch => ({
+        autoLayout: (layout = {}) => dispatch({ type: "ui.updateLayout", ...layout }),
+        updateGameBounds: bounds => dispatch({ type: "game.updateBounds", bounds }),
+        updateZone: (name, zone) => dispatch({ type: "zones.update", name, ...zone }),
+    })
+)(Window);

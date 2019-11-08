@@ -60,7 +60,8 @@ export default function ScaledText(props) {
         }
     }, []);
 
-    // Calculate the new viewbox whenever the string changes
+    // Calculate the new viewbox whenever the string changes - this initialises twice, switching between
+    // views triggers a separate update for both the first render and the changing of the textRenderer state entry
     const viewBox = useMemo(() => {
         return getViewBox(str, textRenderer);
     }, [str, textRenderer]);

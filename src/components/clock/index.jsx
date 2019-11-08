@@ -1,30 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-export default class Clock extends React.Component {
-    componentDidMount() {
-        this.setState({ date: new Date() });
-        this._interval = setInterval(() => this.setState({ date: new Date() }), 1000);
-    }
+export default function Clock() {
+    const [date, setDate] = useState(new Date());
 
-    componentWillUnmount() {
-        clearInterval(this._interval);
-    }
+    useEffect(() => {
+        const interval = setInterval(() => setDate(new Date()), 1000);
+        return () => clearInterval(interval);
+    }, []);
 
-    render() {
-        const { date = new Date() } = this.state || {};
-        return <div className="clock">{this.fmt(date)}</div>
-    }
-
-    fmt(d) {
-        return `${d
-            .getHours()
-            .toString()
-            .padStart(2, "0")}:${d
-            .getMinutes()
-            .toString()
-            .padStart(2, "0")}:${d
-            .getSeconds()
-            .toString()
-            .padStart(2, "0")}`;
-    }
+    return <div className="clock">{fmt(date)}</div>;
 }
+
+const fmt = d => {
+    return `${d
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${d
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}:${d
+        .getSeconds()
+        .toString()
+        .padStart(2, "0")}`;
+};

@@ -13,4 +13,12 @@ export default function demo(store) {
   store.dispatch({ type: "buttons.update", button: "cashier", value: true });
   store.dispatch({ type: "buttons.update", button: "history", value: false });
   store.dispatch({ type: "buttons.update", button: "info", value: false });
+
+  store.dispatch({ type: "ui.updateLayout", bounds: { width: 100, height: 600 }, orientation: "vertical" });
+  store.dispatch({ type: "ui.setSkin", skin: "slot.standard" });
+
+  // Some demo screens, obviously not full components but just something to
+  // get an idea of how to offset them
+  store.dispatch({ type: "screens.add", name: "menu", components: ["Menu"] });
+  store.dispatch({ type: "screens.add", name: "bet-config", components: ["Bet Config"], uiOverlay: true });
 }
