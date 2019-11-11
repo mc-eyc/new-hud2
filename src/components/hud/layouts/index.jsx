@@ -12,14 +12,20 @@ import Mini from "./mini";
  * own width and height regardless of the game.
  */
 export default function Layouts(props) {
-    const { parent, updateGameBounds } = props;
+    const { parent, updateZone, setHUDLayout, title } = props;
     const Layout = chooseLayout(parent.width, parent.height);
 
     React.useEffect(() => {
-        if (updateGameBounds) {
-            updateGameBounds(Layout.gameBounds(parent));
+        if (updateZone) {
+            const stageBounds = Layout.stageBounds(parent, title.enabled);
+            updateZone("stage", stageBounds);
+            updateZone("ui", stageBounds);
         }
-    }, [parent, Layout, updateGameBounds]);
+    }, [parent, title, Layout, updateZone]);
+
+    React.useEffect(() => {
+        setHUDLayout(Layout.name.toLowerCase());
+    }, [Layout, setHUDLayout]);
 
     return (
         <>
@@ -40,7 +46,7 @@ const chooseLayout = (w, h) => {
 
     // First, if any dimension can be considered "mini" then we choose that layout. This can occur even when the other
     // dimension is quite large. It can also easily occur with a narrow phone.
-    if (w <= miniLimit || h <= miniLimit) {
+    if ((w <= miniLimit && (h <= w * 1.5)) || h <= miniLimit || w <= miniLimit * 0.75 || (w <= 500 && h <= 500)) {
         return Mini;
     }
     // If we are in portrait orientation and within the bounds that determine the game can render the landscape HUD
@@ -60,7 +66,7 @@ Layouts.propTypes = {
         width: PropTypes.number.isRequired,
         height: PropTypes.number.isRequired,
     }).isRequired,
-    updateGameBounds: PropTypes.func,
+    updateZone: PropTypes.func,
 };
 
 Layouts.defaultProps = {

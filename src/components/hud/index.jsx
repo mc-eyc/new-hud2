@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import useResizeObserver from "use-resize-observer";
 
 import Layouts from "./layouts";
+import Title from "./title";
 
 const StyledHUD = styled.div`
     padding: 0px;
@@ -27,22 +27,13 @@ export default function HUD(props) {
 
     return (
         <StyledHUD className="hud" ref={ref} theme={props.theme}>
+            <Title {...props.title} />
             <Layouts
                 width={bounds.width || props.parent.width}
                 height={bounds.height || props.parent.height}
+                titleEnabled={props.title.titleEnabled}
                 {...props}
             />
         </StyledHUD>
     );
 }
-
-HUD.propTypes = {
-    updateGameBounds: PropTypes.func,
-};
-
-HUD.defaultProps = {
-    game: {
-        width: 0,
-        height: 0,
-    },
-};

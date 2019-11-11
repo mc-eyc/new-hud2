@@ -16,6 +16,12 @@ export default function Theme(Cradle) {
                 fill: ${props => props.theme.background};
             }
 
+            .game-title {
+                background-color: ${props => props.theme.background};
+                color: ${props => props.theme.gameTitle.color};
+                fill: ${props => props.theme.gameTitle.color};
+            }
+
             .border {
                 stroke: ${props => props.theme.border.color};
             }

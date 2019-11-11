@@ -40,7 +40,7 @@ const StyledWindow = styled(Rnd)`
 
 export function Window(props) {
     const [baseWidth, baseHeight] = [800, 600];
-    const [gameGeom, setGameGeom] = useState({ width: baseWidth, height: baseHeight });
+    const [viewportGeom, setViewportGeom] = useState({ width: baseWidth, height: baseHeight });
     return (
         <StyledWindow
             default={{
@@ -51,12 +51,13 @@ export function Window(props) {
             }}
             onResize={(e, dir, ref) => {
                 const { width, height } = ref.getBoundingClientRect();
-                setGameGeom({ width, height });
+                setViewportGeom({ width, height });
             }}>
             <div className="size">
-                {gameGeom.width} x {gameGeom.height}
+                {viewportGeom.width} x {viewportGeom.height}
             </div>
-            <Cradle {...props} parent={gameGeom} />
+
+            <Cradle {...props} parent={viewportGeom} />
         </StyledWindow>
     );
 }
@@ -64,8 +65,8 @@ export function Window(props) {
 export default connect(
     state => state,
     dispatch => ({
+        setHUDLayout: (layout) => dispatch({ type: "hud.setLayout", layout}),
         autoLayout: (layout = {}) => dispatch({ type: "ui.updateLayout", ...layout }),
-        updateGameBounds: bounds => dispatch({ type: "game.updateBounds", bounds }),
         updateZone: (name, zone) => dispatch({ type: "zones.update", name, ...zone }),
     })
 )(Window);

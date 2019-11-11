@@ -3,10 +3,10 @@ import buttons from "./buttons";
 import clock from "./clock";
 import theme from "./theme";
 import ui from "./ui";
-import game from "./game";
 import zones from "./zones";
 import screens from "./screens";
 import title from "./title";
+import hud from "./hud";
 
 export const reducers = {
     balances,
@@ -14,8 +14,8 @@ export const reducers = {
     clock,
     theme,
     ui,
-    game,
     zones,
     screens,
     title,
+    hud,
 };

@@ -40,7 +40,7 @@ const StyledLayout = styled.svg.attrs(props => ({
     }
 `;
 
-export default function PortraitLayout(props) {
+export default function Portrait(props) {
     const { clock, width } = props;
 
     const height = 96;
@@ -87,17 +87,17 @@ export default function PortraitLayout(props) {
     );
 }
 
-PortraitLayout.defaultProps = {
+Portrait.defaultProps = {
     baseSize: 64,
     stroke: 2,
 };
 
-PortraitLayout.gameBounds = ({width, height}) => {
+Portrait.stageBounds = ({ width, height }, title = false) => {
     return {
         width,
-        height: height - 96 - 2,
+        height: height - 96 - 2 - (title ? 12 : 0),
         x: 0,
-        y: 0,
+        y: title ? 12 : 0,
     };
 };
 

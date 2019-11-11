@@ -24,8 +24,8 @@ export default function SlotStandard(props) {
 }
 
 // Called when automatically laying out where the UI should go (ie. the game is not providing it)
-SlotStandard.autoLayout = ({ width, height }, platform, inverted = false) => {
-    if (platform === "mobile") {
+SlotStandard.autoLayout = ({ width, height }, platform, inverted = false, hud = "landscape") => {
+    if (platform === "mobile" || (hud === "mini" && width > height)) {
         return {
             bounds: {
                 width: width * 0.2,
@@ -36,14 +36,27 @@ SlotStandard.autoLayout = ({ width, height }, platform, inverted = false) => {
             orientation: "vertical",
         };
     } else {
-        return {
-            bounds: {
-                width,
-                height: height * 0.2,
-                x: 0,
-                y: height * 0.8,
-            },
-            orientation: "horizontal",
-        };
+        // Portrait needs to be a bit offset otherwise align to the maximum area
+        if (hud === "portrait" || (hud === "mini" && width <= height * 1.5)) {
+            return {
+                bounds: {
+                    width,
+                    height: height * ((hud === "portrait") ? 0.3 : 0.5),
+                    x: 0,
+                    y: height * ((hud === "portrait") ? 0.6 : 0.5),
+                },
+                orientation: "horizontal",
+            };
+        } else {
+            return {
+                bounds: {
+                    width,
+                    height: height * 0.2,
+                    x: 0,
+                    y: height * 0.8,
+                },
+                orientation: "horizontal",
+            };
+        }
     }
 };

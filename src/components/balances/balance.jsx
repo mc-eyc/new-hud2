@@ -20,13 +20,11 @@ const StyledBalance = styled.div`
         font-weight: bold;
         flex-basis: 40%;
         height: 40%;
-        //border: 1px solid red;
     }
 
     .value {
         flex-basis: 60%;
         height: 60%;
-        //border: 1px solid blue;
     }
 `;
 

@@ -8,6 +8,10 @@ const defaultTheme = {
     background: "rgba(0, 0, 0, 0.95)",
     // Generic font family - serves as the fallback for all font families
     fontFamily: "Open Sans",
+    // Game title
+    gameTitle: {
+        color: "white",
+    },
     // Button themes
     button: {
         color: "white",

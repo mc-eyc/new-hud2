@@ -12,27 +12,21 @@ const StyledUI = styled.div.attrs(props => ({
     },
 }))`
     position: absolute;
-    border: 1px solid red;
-    box-sizing: border-box;
-
     display: flex;
     align-items: center;
-    svg {
-        border: 1px solid green;
-        box-sizing: border-box;
-    }
 `;
 
 export default function UI(props) {
-    const { auto, autoLayout, game, platform, inverted } = props;
+    const { auto, autoLayout, platform, inverted, zones, hudLayout } = props;
+    const { ui: uiZone } = zones;
 
     const Skin = skins[props.skin];
 
     React.useLayoutEffect(() => {
         if (auto) {
-            autoLayout(Skin.autoLayout(game.bounds, platform, inverted));
+            autoLayout(Skin.autoLayout(uiZone, platform, inverted, hudLayout));
         }
-    }, [auto, autoLayout, game, platform, inverted, Skin]);
+    }, [auto, autoLayout, uiZone, platform, inverted, hudLayout, Skin]);
 
     return (
         <StyledUI className="ui" {...props.bounds}>

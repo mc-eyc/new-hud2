@@ -7,11 +7,11 @@ import ThemePicker from "./theme-picker";
 
 const StyledMenu = styled.div`
     font-family: Open Sans;
-    font-size: 1em;
+    font-size: 0.75em;
     font-weight: bold;
     color: white;
     display: grid;
-    grid-template-areas: "theme ui clock" "theme ui buttons";
+    grid-template-areas: "theme ui clock title" "theme ui buttons buttons" "theme ui screens screens";
 
     section {
         fieldset,
@@ -38,8 +38,16 @@ const StyledMenu = styled.div`
         grid-area: clock;
     }
 
+    .title {
+        grid-area: title;
+    }
+
     .buttons {
         grid-area: buttons;
+    }
+
+    .screens {
+        grid-area: screens;
     }
 `;
 
@@ -52,7 +60,11 @@ export function Menu({
     setUIPlatform,
     setUIInverted,
     updateUILayout,
+    updateTitle,
+    goToScreen,
     ui,
+    screens,
+    title,
 }) {
     return (
         <StyledMenu className="menu">
@@ -60,6 +72,7 @@ export function Menu({
                 <fieldset>
                     <legend>Theme</legend>
                     <ThemePicker label="Background" prop="background" />
+                    <ThemePicker label="Game Title" prop="gameTitle.color" />
                     <ThemePicker label="Buttons" prop="button.color" />
                     <ThemePicker label="Balance Title" prop="balance.title.color" />
                     <ThemePicker label="Balance Value" prop="balance.value.color" />
@@ -75,10 +88,34 @@ export function Menu({
                     <form>
                         <input type="checkbox" checked={ui.auto} onChange={e => setUIAuto(e.target.checked)} />
                         <label>Auto</label>
-                        <input type="checkbox" checked={ui.platform === "mobile"} onChange={e => setUIPlatform(e.target.checked ? "mobile" : "desktop")} />
+                        <input
+                            type="checkbox"
+                            checked={ui.platform === "mobile"}
+                            onChange={e => setUIPlatform(e.target.checked ? "mobile" : "desktop")}
+                        />
                         <label>Mobile</label>
                         <input type="checkbox" checked={ui.inverted} onChange={e => setUIInverted(e.target.checked)} />
                         <label>Inverted</label>
+                    </form>
+                </fieldset>
+            </section>
+            <section className="screens">
+                <fieldset>
+                    <legend>Screens</legend>
+                    <form>
+                        {Object.keys(screens.screens).map(screen => (
+                            <>
+                                <input
+                                    key={`screen-${screen}`}
+                                    type="radio"
+                                    name="screenSelect"
+                                    value={screen}
+                                    onChange={e => goToScreen(e.target.value)}
+                                    checked={screens.active === screen ? "checked" : ""}
+                                />
+                                <label>{screen}</label>
+                            </>
+                        ))}
                     </form>
                 </fieldset>
             </section>
@@ -88,6 +125,15 @@ export function Menu({
                     <form>
                         <input type="checkbox" checked={clock} onChange={e => updateClock(e.target.checked)} />
                         <label>Clock</label>
+                    </form>
+                </fieldset>
+            </section>
+            <section className="title">
+                <fieldset>
+                    <legend>Title</legend>
+                    <form>
+                        <input type="checkbox" checked={title.enabled} onChange={e => updateTitle(e.target.checked)} />
+                        <label>Title</label>
                     </form>
                 </fieldset>
             </section>
@@ -131,10 +177,13 @@ export default connect(
     state => state,
     dispatch => ({
         updateClock: value => dispatch({ type: "clock.update", value }),
+        updateTitle: enabled => dispatch({ type: "title.update", enabled }),
         updateButton: (button, value) => dispatch({ type: "buttons.update", button, value }),
         setUIAuto: auto => dispatch({ type: "ui.setAuto", auto }),
         setUIPlatform: platform => dispatch({ type: "ui.setPlatform", platform }),
         setUIInverted: inverted => dispatch({ type: "ui.setInverted", inverted }),
         updateUILayout: opts => dispatch({ type: "ui.updateLayout", ...opts }),
+        toggleScreen: screen => dispatch({ type: "screens.toggle", screen }),
+        goToScreen: screen => dispatch({ type: "screens.goToScreen", screen }),
     })
 )(Menu);

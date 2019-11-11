@@ -16,7 +16,7 @@ const StyledLayout = styled.svg.attrs(props => ({
     }
 `;
 
-export default function MiniLayout(props) {
+export default function Mini(props) {
     const { balances, width } = props;
     const height = 32;
     const baseSize = height;
@@ -35,12 +35,12 @@ export default function MiniLayout(props) {
     );
 }
 
-MiniLayout.gameBounds = ({width, height}) => {
+Mini.stageBounds = ({width, height}, title = false) => {
     return {
         width,
-        height: height - 32 - 2,
+        height: height - 32 - 2 - (title ? 12 : 0),
         x: 0,
-        y: 0,
+        y: title ? 12 : 0,
     };
 };
 

@@ -164,12 +164,12 @@ Landscape.defaultProps = {
     ...balancesDefaultType,
 };
 
-Landscape.gameBounds = ({width, height}) => {
+Landscape.stageBounds = ({width, height}, title = false) => {
     return {
         width,
-        height: height - 64 - 2,
+        height: height - 64 - 2 - (title ? 12 : 0),
         x: 0,
-        y: 0,
+        y: title ? 12 : 0,
     };
 };
 
