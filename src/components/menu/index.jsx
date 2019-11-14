@@ -104,9 +104,8 @@ export function Menu({
                     <legend>Screens</legend>
                     <form>
                         {Object.keys(screens.screens).map(screen => (
-                            <>
+                            <React.Fragment key={`screen-${screen}`}>
                                 <input
-                                    key={`screen-${screen}`}
                                     type="radio"
                                     name="screenSelect"
                                     value={screen}
@@ -114,7 +113,7 @@ export function Menu({
                                     checked={screens.active === screen ? "checked" : ""}
                                 />
                                 <label>{screen}</label>
-                            </>
+                            </React.Fragment>
                         ))}
                     </form>
                 </fieldset>
@@ -184,6 +183,6 @@ export default connect(
         setUIInverted: inverted => dispatch({ type: "ui.setInverted", inverted }),
         updateUILayout: opts => dispatch({ type: "ui.updateLayout", ...opts }),
         toggleScreen: screen => dispatch({ type: "screens.toggle", screen }),
-        goToScreen: screen => dispatch({ type: "screens.goToScreen", screen }),
+        goToScreen: screen => dispatch({ type: "screens.setActiveScreen", screen }),
     })
 )(Menu);

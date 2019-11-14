@@ -101,6 +101,15 @@ Portrait.stageBounds = ({ width, height }, title = false) => {
     };
 };
 
+Portrait.uiBounds = ({ width, height }, title = false) => {
+    return {
+        width: width * 0.8,
+        height: height - 96 - 2 - (title ? 12 : 0),
+        x: width * 0.1,
+        y: title ? 12 : 0,
+    };
+};
+
 const genPath = ({ width, height }, baseSize, clock = false) => {
     const baseOffset = baseSize / 4;
     const clockOffset = clock ? baseOffset * 2 : 0;

@@ -12,16 +12,21 @@ import Mini from "./mini";
  * own width and height regardless of the game.
  */
 export default function Layouts(props) {
-    const { parent, updateZone, setHUDLayout, title } = props;
+    const { parent, updateZone, setHUDLayout, title, autoUI } = props;
     const Layout = chooseLayout(parent.width, parent.height);
 
     React.useEffect(() => {
         if (updateZone) {
             const stageBounds = Layout.stageBounds(parent, title.enabled);
+            // TODO: Interesting - I think there should be separate UI and stage bounds as the screen in portrait
+            // is not actually correct.
             updateZone("stage", stageBounds);
-            updateZone("ui", stageBounds);
+            if (autoUI) {
+                updateZone("ui", Layout.uiBounds ? Layout.uiBounds(parent, title.enabled) : stageBounds);
+            }
+            updateZone("screenLayer2", { ...stageBounds, x: 0, y: 0 });
         }
-    }, [parent, title, Layout, updateZone]);
+    }, [parent, title, Layout, updateZone, autoUI]);
 
     React.useEffect(() => {
         setHUDLayout(Layout.name.toLowerCase());
@@ -46,7 +51,7 @@ const chooseLayout = (w, h) => {
 
     // First, if any dimension can be considered "mini" then we choose that layout. This can occur even when the other
     // dimension is quite large. It can also easily occur with a narrow phone.
-    if ((w <= miniLimit && (h <= w * 1.5)) || h <= miniLimit || w <= miniLimit * 0.75 || (w <= 500 && h <= 500)) {
+    if ((w <= miniLimit && h <= w * 1.5) || h <= miniLimit || w <= miniLimit * 0.75 || (w <= 500 && h <= 500)) {
         return Mini;
     }
     // If we are in portrait orientation and within the bounds that determine the game can render the landscape HUD

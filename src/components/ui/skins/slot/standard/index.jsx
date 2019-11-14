@@ -14,7 +14,7 @@ export default function SlotStandard(props) {
     const Layout = orientation === "vertical" ? VerticalLayout : HorizontalLayout;
     return (
         <StyledUI width="100%" height="100%" viewBox={Layout.viewBox}>
-            <Layout>
+            <Layout callback={props.callback}>
                 <AutoSpinConfig />
                 <Spin />
                 <BetConfig />
@@ -25,7 +25,7 @@ export default function SlotStandard(props) {
 
 // Called when automatically laying out where the UI should go (ie. the game is not providing it)
 SlotStandard.autoLayout = ({ width, height }, platform, inverted = false, hud = "landscape") => {
-    if (platform === "mobile" || (hud === "mini" && width > height)) {
+    if ((platform === "mobile" && hud === "landscape") || (hud === "mini" && width > height)) {
         return {
             bounds: {
                 width: width * 0.2,
@@ -40,9 +40,9 @@ SlotStandard.autoLayout = ({ width, height }, platform, inverted = false, hud = 
         if (hud === "portrait" || (hud === "mini" && width <= height * 1.5)) {
             return {
                 bounds: {
-                    width,
+                    width: width * (hud === "mini" ? 0.8 : 1.0),
                     height: height * ((hud === "portrait") ? 0.3 : 0.5),
-                    x: 0,
+                    x: width * (hud === "mini" ? 0.1 : 0),
                     y: height * ((hud === "portrait") ? 0.6 : 0.5),
                 },
                 orientation: "horizontal",

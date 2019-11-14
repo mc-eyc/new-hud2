@@ -50,8 +50,13 @@ export function Window(props) {
                 height: baseHeight,
             }}
             onResize={(e, dir, ref) => {
-                const { width, height } = ref.getBoundingClientRect();
+                const { width, height, x, y } = ref.getBoundingClientRect();
                 setViewportGeom({ width, height });
+                props.updateZone("viewport", { width, height, x, y });
+            }}
+            onDrag={(e, { node }) => {
+                const { width, height, x, y } = node.getBoundingClientRect();
+                props.updateZone("viewport", { width, height, x, y });
             }}>
             <div className="size">
                 {viewportGeom.width} x {viewportGeom.height}
@@ -65,7 +70,7 @@ export function Window(props) {
 export default connect(
     state => state,
     dispatch => ({
-        setHUDLayout: (layout) => dispatch({ type: "hud.setLayout", layout}),
+        setHUDLayout: layout => dispatch({ type: "hud.setLayout", layout }),
         autoLayout: (layout = {}) => dispatch({ type: "ui.updateLayout", ...layout }),
         updateZone: (name, zone) => dispatch({ type: "zones.update", name, ...zone }),
     })

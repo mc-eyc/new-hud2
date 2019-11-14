@@ -15,12 +15,12 @@ export default function screens(state = { screens: {}, active: null }, action) {
                 ...state,
                 active: state.active === action.screen ? null : action.screen,
             };
-        case "screens.goToScreen":
+        case "screens.setActiveScreen":
             return {
                 ...state,
                 active: state.active !== action.screen ? action.screen : state.screen,
             };
-        case "screens.changeScreenLevel":
+        case "screens.setScreenLevel":
             return {
                 ...state,
                 screens: {

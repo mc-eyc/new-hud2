@@ -19,10 +19,10 @@ export default function demo(store) {
 
   // Some demo screens, obviously not full components but just something to
   // get an idea of how to offset them
-  store.dispatch({ type: "screens.add", name: "main", components: [], level: 0 });
-  store.dispatch({ type: "screens.add", name: "menu", components: ["Menu"], level: 2 });
-  store.dispatch({ type: "screens.add", name: "bet-config", components: ["Bet Config"], level: 1 });
-  store.dispatch({ type: "screens.goToScreen", screen: "main" });
+  store.dispatch({ type: "screens.add", name: "main", components: [], layer: 0 });
+  store.dispatch({ type: "screens.add", name: "menu", components: ["Menu"], layer: 2 });
+  store.dispatch({ type: "screens.add", name: "bet-config", components: ["Bet Config"], layer: 1 });
+  store.dispatch({ type: "screens.setActiveScreen", screen: "main" });
 
   store.dispatch({ type: "title.update", text: "Example Game", enabled: true});
 }
