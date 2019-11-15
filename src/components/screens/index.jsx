@@ -44,10 +44,10 @@ export default function Screens(props) {
     }, [screens, active]);
 
     return (
-        <StyledScreens active={props.active}>
-            <div className="screens-layer-0">{/* Render main game screen here */}</div>
+        <StyledScreens className="screens" active={props.active}>
+            <div className="screen-layer-0">{/* Render main game screen here */}</div>
             {activeScreen && activeScreen.layer > 0 ? (
-                <StyledModal className={`modal screens-layer-${activeScreen.layer}`}>
+                <StyledModal className={`modal screen-layer-${activeScreen.layer}`}>
                     <StyledStage {...zones.stage}>
                         <Screen name={active} bounds={zones[`screenLayer${activeScreen.layer}`]} {...activeScreen} />
                     </StyledStage>

@@ -36,7 +36,7 @@ SlotStandard.autoLayout = ({ width, height }, platform, inverted = false, hud = 
             orientation: "vertical",
         };
     } else {
-        // Portrait needs to be a bit offset otherwise align to the maximum area
+        // Portrait and mini-portrait needs to be a bit offset otherwise align to the maximum area
         if (hud === "portrait" || (hud === "mini" && width <= height * 1.5)) {
             return {
                 bounds: {

@@ -40,6 +40,16 @@ const defaultTheme = {
     ui: {
         color: "white",
         background: "rgba(0, 0, 0, 0.95)",
+    },
+    screen: {
+        background: "black",
+        title: "white",
+        text: "white",
+        accent: "cornflowerblue",
+        button: {
+            color: "white",
+            background: "#464646",
+        }
     }
 };
 

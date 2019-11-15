@@ -60,5 +60,19 @@ export default function Theme(Cradle) {
                 fill: ${props => props.theme.ui.background};
             }
         }
+
+        .screens {
+            .modal {
+                background: ${props => props.theme.screen.background};
+            }
+            .screen {
+                color: ${props => props.theme.screen.text};
+
+                .button {
+                    color: ${props => props.theme.screen.button.color};
+                    background-color: ${props => props.theme.screen.button.background};
+                }
+            }
+        }
     `;
 }
