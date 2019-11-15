@@ -15,6 +15,7 @@ const StyledUI = styled.div.attrs(props => ({
     position: absolute;
     display: flex;
     align-items: center;
+    pointer-events: auto;
 `;
 
 export default function UI(props) {

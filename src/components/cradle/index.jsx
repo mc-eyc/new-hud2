@@ -27,6 +27,8 @@ const StyledUIContainer = styled.div.attrs(props => ({
     },
 }))`
     position: absolute;
+        // The container should not block pointer events, the ui should set this on auto to itself.
+        pointer-events: none;
 `;
 
 export default function Cradle(props) {

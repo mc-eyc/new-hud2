@@ -80,6 +80,12 @@ export function Menu({
                     <ThemePicker label="Border" prop="border.color" />
                     <ThemePicker label="UI Foreground" prop="ui.color" />
                     <ThemePicker label="UI Background" prop="ui.background" />
+                    <ThemePicker label="Screen Background" prop="screen.background" />
+                    <ThemePicker label="Screen Text" prop="screen.text" />
+                    <ThemePicker label="Screen Titles" prop="screen.title" />
+                    <ThemePicker label="Screen Accent" prop="screen.accent" />
+                    <ThemePicker label="Button Text" prop="screen.button.color" />
+                    <ThemePicker label="Button Background" prop="screen.button.background" />
                 </fieldset>
             </section>
             <section className="ui">

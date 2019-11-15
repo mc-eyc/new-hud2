@@ -1,9 +1,11 @@
 import Button from "./button";
-import Text from "./text";
+import Group from "./group";
 import Header from "./header";
+import Text from "./text";
 
 export default {
     Button,
-    Text,
+    Group,
     Header,
+    Text,
 };

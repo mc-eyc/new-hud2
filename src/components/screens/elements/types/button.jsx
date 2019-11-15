@@ -6,7 +6,10 @@ const StyledButton = styled.button`
   display: block;
   font-size: 1em;
   width: 100%;
-  max-width: ;
+  max-width: 20em;
+  margin: 0.25em;
+  padding: 0.25em;
+  border: none;
 `;
 
 export default function Button(props) {

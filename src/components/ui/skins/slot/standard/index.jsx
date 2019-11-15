@@ -7,7 +7,11 @@ import BetConfig from "./buttons/bet-config";
 import VerticalLayout from "./layouts/vertical";
 import HorizontalLayout from "./layouts/horizontal";
 
-const StyledUI = styled.svg``;
+const StyledUI = styled.svg`
+    .button {
+        cursor: pointer;
+    }
+`;
 
 export default function SlotStandard(props) {
     const { orientation, data } = props;

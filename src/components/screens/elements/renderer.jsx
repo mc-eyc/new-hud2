@@ -14,10 +14,12 @@ const elementChooser = type => {
   switch (type) {
     case "button":
       return elements.Button;
-    case "text":
-      return elements.Text;
+    case "group":
+      return elements.Group;
     case "header":
       return elements.Header;
+    case "text":
+      return elements.Text;
     default:
       throw new Error(`Unknown element type "${type}"`);
   }
