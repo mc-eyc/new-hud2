@@ -14,13 +14,13 @@ const StyledGroup = styled.div.attrs(props => ({
     width: 100%;
 
     > * {
-      flex-basis: ${props => props.ratio};
+        flex-basis: ${props => props.ratio};
     }
 `;
 
 export default function Group(props) {
     return (
-        <StyledGroup orientation={props.orientation} ratio={props.ratio}>
+        <StyledGroup className={props.className} orientation={props.orientation} ratio={props.ratio}>
             <ScreenElementsRenderer elements={props.children} />
         </StyledGroup>
     );

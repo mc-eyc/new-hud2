@@ -7,7 +7,7 @@ const StyledHeader = styled.h1`
 `;
 
 export default function Header(props) {
-    return <StyledHeader className="header">{props.text}</StyledHeader>;
+    return <StyledHeader className={props.className}>{props.text}</StyledHeader>;
 }
 
 Header.propTypes = {

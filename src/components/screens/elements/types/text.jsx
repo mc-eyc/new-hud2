@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default function Text(props) {
-    return <p>{props.value}</p>;
+    return <p className={props.className}>{props.value}</p>;
 }
 
 Text.propTypes = {

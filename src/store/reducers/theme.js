@@ -45,7 +45,7 @@ const defaultTheme = {
         background: "black",
         title: "white",
         text: "white",
-        accent: "cornflowerblue",
+        accent: "#46bebc",
         button: {
             color: "white",
             background: "#464646",

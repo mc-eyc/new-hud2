@@ -13,7 +13,7 @@ const StyledButton = styled.button`
 `;
 
 export default function Button(props) {
-    return <StyledButton className="button">{props.text}</StyledButton>;
+    return <StyledButton className={props.className}>{props.text}</StyledButton>;
 }
 
 Button.propTypes = {

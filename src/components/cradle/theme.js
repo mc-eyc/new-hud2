@@ -72,6 +72,11 @@ export default function Theme(Cradle) {
                     color: ${props => props.theme.screen.button.color};
                     background-color: ${props => props.theme.screen.button.background};
                 }
+
+                // PerfectScrollbar Class Names
+                .ps__thumb-y, .ps__thumb-x {
+                    background-color: ${props => props.theme.screen.accent};
+                }
             }
         }
     `;
