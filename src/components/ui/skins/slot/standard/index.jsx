@@ -8,6 +8,7 @@ import VerticalLayout from "./layouts/vertical";
 import HorizontalLayout from "./layouts/horizontal";
 import useTransitions from "../../../hooks/use-transitions";
 import useSkin from "../../../hooks/use-skin";
+import { TweenMax, TimelineMax } from "gsap";
 
 const StyledUI = styled.svg`
     .button {
@@ -24,7 +25,9 @@ export default React.forwardRef(function SlotStandard(props, forwardRef) {
     const betRef = React.useRef();
 
     const [play, stop] = useTransitions({
-        [["default", "spin"]]: () => console.log("spinning..."),
+        [["default", "spin"]]: () => {
+            return new TimelineMax().add(TweenMax.to(spinRef.current.element, 0.5}, { opacity: 0.5 }));
+        },
         [["spin", "default"]]: () => console.log("finish spinning..."),
     });
 
