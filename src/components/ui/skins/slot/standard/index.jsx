@@ -6,6 +6,8 @@ import AutoSpinConfig from "./buttons/auto-spin-config";
 import BetConfig from "./buttons/bet-config";
 import VerticalLayout from "./layouts/vertical";
 import HorizontalLayout from "./layouts/horizontal";
+import useTransitions from "../../../hooks/use-transitions";
+import useSkin from "../../../hooks/use-skin";
 
 const StyledUI = styled.svg`
     .button {
@@ -13,22 +15,38 @@ const StyledUI = styled.svg`
     }
 `;
 
-export default function SlotStandard(props) {
+export default React.forwardRef(function SlotStandard(props, forwardRef) {
     const { orientation, data } = props;
     const Layout = orientation === "vertical" ? VerticalLayout : HorizontalLayout;
+
+    const autoRef = React.useRef();
+    const spinRef = React.useRef();
+    const betRef = React.useRef();
+
+    const [play, stop] = useTransitions({
+        [["default", "spin"]]: () => console.log("spinning..."),
+        [["spin", "default"]]: () => console.log("finish spinning..."),
+    });
+
+    useSkin(forwardRef, {
+        autoLayout,
+        play,
+        stop,
+    });
+
     return (
         <StyledUI width="100%" height="100%" viewBox={Layout.viewBox}>
             <Layout callback={props.callback}>
-                <AutoSpinConfig />
-                <Spin />
-                <BetConfig />
+                <AutoSpinConfig ref={autoRef} />
+                <Spin ref={spinRef} />
+                <BetConfig ref={betRef} />
             </Layout>
         </StyledUI>
     );
-}
+});
 
 // Called when automatically laying out where the UI should go (ie. the game is not providing it)
-SlotStandard.autoLayout = ({ width, height }, platform, inverted = false, hud = "landscape") => {
+const autoLayout = ({ width, height }, platform, inverted = false, hud = "landscape") => {
     if ((platform === "mobile" && hud === "landscape") || (hud === "mini" && width > height)) {
         return {
             bounds: {
@@ -45,9 +63,9 @@ SlotStandard.autoLayout = ({ width, height }, platform, inverted = false, hud = 
             return {
                 bounds: {
                     width: width * (hud === "mini" ? 0.8 : 1.0),
-                    height: height * ((hud === "portrait") ? 0.3 : 0.5),
+                    height: height * (hud === "portrait" ? 0.3 : 0.5),
                     x: width * (hud === "mini" ? 0.1 : 0),
-                    y: height * ((hud === "portrait") ? 0.6 : 0.5),
+                    y: height * (hud === "portrait" ? 0.6 : 0.5),
                 },
                 orientation: "horizontal",
             };

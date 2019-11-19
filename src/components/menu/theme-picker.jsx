@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { SketchPicker } from "react-color";
@@ -36,6 +36,7 @@ const StyledColorBox = styled.a.attrs(props => ({
     border: 0.25em solid black;
     display: block;
     cursor: pointer;
+    margin-right: 0.5em;
 `;
 
 export function ThemePicker(props) {

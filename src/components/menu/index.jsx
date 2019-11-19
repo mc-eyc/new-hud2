@@ -11,13 +11,29 @@ const StyledMenu = styled.div`
     font-weight: bold;
     color: white;
     display: grid;
-    grid-template-areas: "theme ui clock title" "theme ui buttons buttons" "theme ui screens screens";
+    grid-template-areas: "theme ui toggles toggles" "theme buttons buttons buttons" "theme screens screens screens";
+    grid-template-columns: 34em;
 
     section {
         fieldset,
         form {
             display: flex;
             align-items: center;
+        }
+
+        fieldset {
+            border-radius: 1em;
+            border-color: #0f0c29;
+
+            legend {
+                font-size: 1.25em;
+                color: pink;
+                background-color: rgba(0, 0, 0, 0.8);
+                padding: 0.015em 0.35em 0.15em 0.35em;
+                font-weight: bold;
+                text-transform: uppercase;
+                border-radius: 0.25em;
+            }
         }
     }
 
@@ -28,18 +44,29 @@ const StyledMenu = styled.div`
 
     .theme {
         grid-area: theme;
+
+        fieldset {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
+
+            .theme-picker {
+                display: inline-flex;
+                flex-basis: 50%;
+                width: 45%;
+            }
+        }
     }
 
     .ui {
         grid-area: ui;
     }
 
-    .clock {
-        grid-area: clock;
-    }
-
-    .title {
-        grid-area: title;
+    .toggles {
+        grid-area: toggles;
     }
 
     .buttons {
@@ -71,21 +98,23 @@ export function Menu({
             <section className="theme">
                 <fieldset>
                     <legend>Theme</legend>
-                    <ThemePicker label="Background" prop="background" />
-                    <ThemePicker label="Game Title" prop="gameTitle.color" />
-                    <ThemePicker label="Buttons" prop="button.color" />
-                    <ThemePicker label="Balance Title" prop="balance.title.color" />
-                    <ThemePicker label="Balance Value" prop="balance.value.color" />
-                    <ThemePicker label="Clock" prop="clock.color" />
-                    <ThemePicker label="Border" prop="border.color" />
-                    <ThemePicker label="UI Foreground" prop="ui.color" />
-                    <ThemePicker label="UI Background" prop="ui.background" />
-                    <ThemePicker label="Screen Background" prop="screen.background" />
-                    <ThemePicker label="Screen Text" prop="screen.text" />
-                    <ThemePicker label="Screen Titles" prop="screen.title" />
-                    <ThemePicker label="Screen Accent" prop="screen.accent" />
-                    <ThemePicker label="Button Text" prop="screen.button.color" />
-                    <ThemePicker label="Button Background" prop="screen.button.background" />
+                    <div>
+                        <ThemePicker label="Background" prop="background" />
+                        <ThemePicker label="Game Title" prop="gameTitle.color" />
+                        <ThemePicker label="Buttons" prop="button.color" />
+                        <ThemePicker label="Balance Title" prop="balance.title.color" />
+                        <ThemePicker label="Balance Value" prop="balance.value.color" />
+                        <ThemePicker label="Clock" prop="clock.color" />
+                        <ThemePicker label="Border" prop="border.color" />
+                        <ThemePicker label="UI Foreground" prop="ui.color" />
+                        <ThemePicker label="UI Background" prop="ui.background" />
+                        <ThemePicker label="Screen Background" prop="screen.background" />
+                        <ThemePicker label="Screen Text" prop="screen.text" />
+                        <ThemePicker label="Screen Titles" prop="screen.title" />
+                        <ThemePicker label="Screen Accent" prop="screen.accent" />
+                        <ThemePicker label="Button Text" prop="screen.button.color" />
+                        <ThemePicker label="Button Background" prop="screen.button.background" />
+                    </div>
                 </fieldset>
             </section>
             <section className="ui">
@@ -102,6 +131,7 @@ export function Menu({
                         <label>Mobile</label>
                         <input type="checkbox" checked={ui.inverted} onChange={e => setUIInverted(e.target.checked)} />
                         <label>Inverted</label>
+                        
                     </form>
                 </fieldset>
             </section>
@@ -124,19 +154,12 @@ export function Menu({
                     </form>
                 </fieldset>
             </section>
-            <section className="clock">
+            <section className="toggles">
                 <fieldset>
-                    <legend>Clock</legend>
+                    <legend>Toggles</legend>
                     <form>
                         <input type="checkbox" checked={clock} onChange={e => updateClock(e.target.checked)} />
                         <label>Clock</label>
-                    </form>
-                </fieldset>
-            </section>
-            <section className="title">
-                <fieldset>
-                    <legend>Title</legend>
-                    <form>
                         <input type="checkbox" checked={title.enabled} onChange={e => updateTitle(e.target.checked)} />
                         <label>Title</label>
                     </form>
@@ -187,6 +210,7 @@ export default connect(
         setUIAuto: auto => dispatch({ type: "ui.setAuto", auto }),
         setUIPlatform: platform => dispatch({ type: "ui.setPlatform", platform }),
         setUIInverted: inverted => dispatch({ type: "ui.setInverted", inverted }),
+        setUIActivity: activity => dispatch({ type: "ui.setActivity", activity}),
         updateUILayout: opts => dispatch({ type: "ui.updateLayout", ...opts }),
         toggleScreen: screen => dispatch({ type: "screens.toggle", screen }),
         goToScreen: screen => dispatch({ type: "screens.setActiveScreen", screen }),

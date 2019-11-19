@@ -23,14 +23,15 @@ export default function UI(props) {
     const { viewport: viewportZone, stage: stageZone, ui: uiZone } = zones;
 
     const ref = React.useRef(null);
+    const skinRef = React.useRef(null);
 
     const Skin = skins[props.skin];
 
     React.useLayoutEffect(() => {
-        if (auto) {
-            autoLayout(Skin.autoLayout(uiZone, platform, inverted, hudLayout));
+        if (auto && skinRef.current && typeof skinRef.current.autoLayout === "function") {
+            autoLayout(skinRef.current.autoLayout(uiZone, platform, inverted, hudLayout));
         }
-    }, [auto, autoLayout, uiZone, platform, inverted, hudLayout, Skin]);
+    }, [auto, autoLayout, uiZone, platform, inverted, hudLayout, Skin, skinRef]);
 
     React.useLayoutEffect(() => {
         if (updateZone && ref.current) {
@@ -45,7 +46,7 @@ export default function UI(props) {
 
     return (
         <StyledUI className="ui" ref={ref} {...props.bounds}>
-            {Skin ? <Skin {...props} /> : null}
+            {Skin ? <Skin {...props} ref={skinRef} /> : null}
         </StyledUI>
     );
 }

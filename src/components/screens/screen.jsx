@@ -36,7 +36,7 @@ const StyledScreen = styled.div.attrs(props => ({
     // Center vertically
     ${props =>
         props.align.y === "center"
-            ? "display:flex;.element:first-of-type{margin-top:auto}.element:last-of-type{margin-bottom:auto}"
+            ? "display:flex;>.first-element{margin-top:auto}>.last-element{margin-bottom:auto}"
             : ""}
 
 `;

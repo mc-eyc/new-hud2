@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 const StyledHeader = styled.h1`
   font-size: 1.5em;
+  margin: 0px;
+  padding: 0px;
 `;
 
 export default function Header(props) {
