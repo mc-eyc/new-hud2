@@ -19,11 +19,24 @@ const StyledUI = styled.div.attrs(props => ({
 `;
 
 export default function UI(props) {
-    const { auto, bounds, autoLayout, platform, inverted, zones, hudLayout, updateZone, activeScreen } = props;
+    const {
+        activity,
+        auto,
+        bounds,
+        autoLayout,
+        platform,
+        inverted,
+        zones,
+        hudLayout,
+        updateZone,
+        activeScreen,
+    } = props;
     const { viewport: viewportZone, stage: stageZone, ui: uiZone } = zones;
 
     const ref = React.useRef(null);
     const skinRef = React.useRef(null);
+
+    const [currentActivity, setCurrentActivity] = React.useState(activity);
 
     const Skin = skins[props.skin];
 
@@ -43,6 +56,14 @@ export default function UI(props) {
             updateZone("screenLayer1", calcSafeArea({ parent: globalParent, child: uiBounds }));
         }
     }, [activeScreen, bounds, uiZone, stageZone, viewportZone, updateZone, ref]);
+
+    React.useEffect(() => {
+        if (skinRef.current && typeof skinRef.current.play === "function") {
+            skinRef.current.stop();
+            skinRef.current.play(currentActivity, activity);
+            setCurrentActivity(activity);
+        }
+    }, [activity]);
 
     return (
         <StyledUI className="ui" ref={ref} {...props.bounds}>

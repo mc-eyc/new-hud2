@@ -86,7 +86,7 @@ export function Menu({
     setUIAuto,
     setUIPlatform,
     setUIInverted,
-    updateUILayout,
+    setUIActivity,
     updateTitle,
     goToScreen,
     ui,
@@ -131,7 +131,13 @@ export function Menu({
                         <label>Mobile</label>
                         <input type="checkbox" checked={ui.inverted} onChange={e => setUIInverted(e.target.checked)} />
                         <label>Inverted</label>
-                        
+                        <select value={ui.activity} onChange={e => setUIActivity(e.target.value)}>
+                            {["default", "spin", "freeSpin"].map(opt => (
+                                <option key={`activity-${opt}`} value={opt}>
+                                    {opt}
+                                </option>
+                            ))}
+                        </select>
                     </form>
                 </fieldset>
             </section>
@@ -210,7 +216,7 @@ export default connect(
         setUIAuto: auto => dispatch({ type: "ui.setAuto", auto }),
         setUIPlatform: platform => dispatch({ type: "ui.setPlatform", platform }),
         setUIInverted: inverted => dispatch({ type: "ui.setInverted", inverted }),
-        setUIActivity: activity => dispatch({ type: "ui.setActivity", activity}),
+        setUIActivity: activity => dispatch({ type: "ui.setActivity", activity }),
         updateUILayout: opts => dispatch({ type: "ui.updateLayout", ...opts }),
         toggleScreen: screen => dispatch({ type: "screens.toggle", screen }),
         goToScreen: screen => dispatch({ type: "screens.setActiveScreen", screen }),
