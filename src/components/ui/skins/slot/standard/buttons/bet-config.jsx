@@ -3,7 +3,7 @@ import React from "react";
 import useTransitionRef from "../../../../hooks/use-transition-ref";
 
 export default React.forwardRef(function BetConfig(props, forwardRef) {
-    const ref = useTransitionRef(forwardRef);
+    const [ref] = useTransitionRef(forwardRef);
 
     return (
         <svg className="button bet-config" width="48" height="48" viewBox="0 0 48 48" ref={ref}>

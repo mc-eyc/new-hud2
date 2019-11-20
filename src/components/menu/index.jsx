@@ -42,6 +42,15 @@ const StyledMenu = styled.div`
         margin-right: 1em;
     }
 
+    select {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+
+        option {
+            background-color: black;
+        }
+    }
+
     .theme {
         grid-area: theme;
 
