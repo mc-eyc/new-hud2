@@ -13,7 +13,6 @@ export default function useTransitions(anims) {
             }
         },
         () => {
-            console.log("Stopping", timeline);
             if (timeline) {
                 timeline.progress(1);
             }

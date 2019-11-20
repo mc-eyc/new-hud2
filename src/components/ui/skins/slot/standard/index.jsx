@@ -67,12 +67,6 @@ export default React.forwardRef(function SlotStandard(props, forwardRef) {
         stop,
     });
 
-    const elem = spinRef.current && spinRef.current.element;
-    React.useEffect(() => {
-        console.log("changing element");
-        stop();
-    }, [elem]);
-
     return (
         <StyledUI width="100%" height="100%" viewBox={Layout.viewBox}>
             {Layout({
