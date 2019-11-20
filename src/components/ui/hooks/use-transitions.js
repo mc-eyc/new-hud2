@@ -1,14 +1,25 @@
 import React from "react";
 
-export default function useTransitions(anims) {
-    const [animations] = React.useState(explodeAnims(anims));
+export default function useTransitions(targetRefs, anims) {
+    // Parse out the target refs
+    const refs = parseRefs(targetRefs);
+
+    // Store the animations in the state
+    const [animations, setAnimations] = React.useState({});
+
+    // Store the timeline in the state
     const [timeline, setTimeline] = React.useState();
+
+    // Setup the animations in the state once (avoids the expensive call to explodeAnims)
+    React.useEffect(() => {
+        setAnimations(explodeAnims(anims));
+    }, []);
 
     return [
         (from, to) => {
             const key = animKey(from, to);
             if (animations[key]) {
-                const tl = animations[key]();
+                const tl = animations[key](refs);
                 setTimeline(tl);
             }
         },
@@ -19,6 +30,13 @@ export default function useTransitions(anims) {
         },
         timeline,
     ];
+}
+
+// Parse out the refs into their current state
+function parseRefs(refs) {
+    const result = {};
+    Object.keys(refs).forEach(key => (result[key] = refs[key].current));
+    return result;
 }
 
 // Parse out the animations with multiple keys into individual entries for each one.
