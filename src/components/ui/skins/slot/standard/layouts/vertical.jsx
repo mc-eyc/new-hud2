@@ -1,10 +1,16 @@
 import React from "react";
 
-export default function VerticalLayout(props) {
+export default function VerticalLayout(...children) {
     return [
-            <g key="auto-config-container" transform="translate(8, 0)">{props.children[0]}</g>,
-            <g key="spin-container" transform="translate(0, 54)">{props.children[1]}</g>,
-            <g key="bet-config-container" transform="translate(8, 124)">{props.children[2]}</g>,
+        <g key="auto-config-container" transform="translate(8, 0)">
+            {children[0]}
+        </g>,
+        <g key="spin-container" transform="translate(0, 54)">
+            {children[1]}
+        </g>,
+        <g key="bet-config-container" transform="translate(8, 124)">
+            {children[2]}
+        </g>,
     ];
 }
 

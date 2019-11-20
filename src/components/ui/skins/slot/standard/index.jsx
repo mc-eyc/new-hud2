@@ -69,13 +69,11 @@ export default React.forwardRef(function SlotStandard(props, forwardRef) {
 
     return (
         <StyledUI width="100%" height="100%" viewBox={Layout.viewBox}>
-            {Layout({
-                children: [
-                    <AutoSpinConfig key="auto-spin" ref={autoRef} />,
-                    <Spin key="spin" ref={spinRef} />,
-                    <BetConfig key="bet-config" ref={betRef} />,
-                ],
-            })}
+            {Layout(
+                <AutoSpinConfig key="auto-spin" ref={autoRef} />,
+                <Spin key="spin" ref={spinRef} />,
+                <BetConfig key="bet-config" ref={betRef} />
+            )}
         </StyledUI>
     );
 });
