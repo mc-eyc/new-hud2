@@ -5,5 +5,6 @@ export default function useSkin(ref, opts) {
     autoLayout: opts.autoLayout,
     play: opts.play,
     stop: opts.stop,
-  }), []);
+  }), [opts]);
+  // TODO: Optimise recreating this value with callbacks maybe?
 }

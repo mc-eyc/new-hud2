@@ -8,11 +8,14 @@ import VerticalLayout from "./layouts/vertical";
 import HorizontalLayout from "./layouts/horizontal";
 import useTransitions from "../../../hooks/use-transitions";
 import useSkin from "../../../hooks/use-skin";
-import { TweenMax, TimelineMax } from "gsap";
+import { TweenMax, TimelineMax, Back } from "gsap";
 
 const StyledUI = styled.svg`
+    overflow: visible;
+
     .button {
         cursor: pointer;
+        transform-origin: center;
     }
 `;
 
@@ -25,10 +28,37 @@ export default React.forwardRef(function SlotStandard(props, forwardRef) {
     const betRef = React.useRef();
 
     const [play, stop] = useTransitions({
-        [["default", "spin"]]: () => {
-            return new TimelineMax().add(TweenMax.to(spinRef.current.element, 0.5}, { opacity: 0.5 }));
+        "default > spin": () => {
+            return new TimelineMax().add(
+                TweenMax.fromTo(
+                    spinRef.current.element,
+                    0.25,
+                    { attr: { x: 0, y: 0 } },
+                    { ease: Back.easeIn, opacity: 0, attr: { x: 32, y: 32, width: 0, height: 0 } }
+                ),
+                TweenMax.fromTo(
+                    [autoRef.current.element, betRef.current.element],
+                    0.25,
+                    { attr: { x: 0, y: 0 } },
+                    { ease: Back.easeIn, delay: 0.125, opacity: 0, attr: { x: 24, y: 24, width: 0, height: 0 } }
+                )
+            );
         },
-        [["spin", "default"]]: () => console.log("finish spinning..."),
+        "spin > default": () => {
+            return new TimelineMax().add(
+                TweenMax.to(spinRef.current.element, 0.25, {
+                    ease: Back.easeOut,
+                    opacity: 1.0,
+                    attr: { x: 0, y: 0, width: 64, height: 64 },
+                }),
+                TweenMax.to([autoRef.current.element, betRef.current.element], 0.25, {
+                    ease: Back.easeOut,
+                    delay: 0.125,
+                    opacity: 1.0,
+                    attr: { x: 0, y: 0, width: 48, height: 48 },
+                })
+            );
+        },
     });
 
     useSkin(forwardRef, {
@@ -37,13 +67,21 @@ export default React.forwardRef(function SlotStandard(props, forwardRef) {
         stop,
     });
 
+    const elem = spinRef.current && spinRef.current.element;
+    React.useEffect(() => {
+        console.log("changing element");
+        stop();
+    }, [elem]);
+
     return (
         <StyledUI width="100%" height="100%" viewBox={Layout.viewBox}>
-            <Layout callback={props.callback}>
-                <AutoSpinConfig ref={autoRef} />
-                <Spin ref={spinRef} />
-                <BetConfig ref={betRef} />
-            </Layout>
+            {Layout({
+                children: [
+                    <AutoSpinConfig key="auto-spin" ref={autoRef} />,
+                    <Spin key="spin" ref={spinRef} />,
+                    <BetConfig key="bet-config" ref={betRef} />,
+                ],
+            })}
         </StyledUI>
     );
 });
