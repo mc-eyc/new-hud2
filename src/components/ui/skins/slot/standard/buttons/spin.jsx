@@ -15,14 +15,18 @@ export default React.forwardRef(function Spin(props, forwardRef) {
 const chooseSkin = (skin = "default") => {
     switch (skin) {
         case "freeSpin":
-            return [
-                <circle className="ui-fg" cx="32" cy="32" r="32" />,
-                <circle className="ui-bg" cx="32" cy="32" r="31" strokeWidth="2" fill="none" />,
-            ];
+            return (
+                <>
+                    <circle className="ui-fg theme-fill" cx="32" cy="32" r="32" />,
+                    <circle className="ui-bg theme-stroke" cx="32" cy="32" r="31" strokeWidth="2" fill="none" />,
+                </>
+            );
         default:
-            return [
-                <circle className="ui-bg" cx="32" cy="32" r="32" />,
-                <circle className="ui-fg" cx="32" cy="32" r="31" strokeWidth="2" fill="none" />,
-            ];
+            return (
+                <>
+                    <circle className="ui-bg theme-fill" cx="32" cy="32" r="32" />,
+                    <circle className="ui-fg theme-stroke" cx="32" cy="32" r="31" strokeWidth="2" fill="none" />,
+                </>
+            );
     }
 };

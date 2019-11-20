@@ -53,11 +53,21 @@ export default function Theme(Cradle) {
 
         .ui {
             .ui-fg {
-                stroke: ${props => props.theme.ui.color};
+                &.theme-stroke {
+                    stroke: ${props => props.theme.ui.color};
+                }
+                &.theme-fill {
+                    fill: ${props => props.theme.ui.color};
+                }
             }
 
             .ui-bg {
-                fill: ${props => props.theme.ui.background};
+                &.theme-stroke {
+                    stroke: ${props => props.theme.ui.background};
+                }
+                &.theme-fill {
+                    fill: ${props => props.theme.ui.background};
+                }
             }
         }
 
