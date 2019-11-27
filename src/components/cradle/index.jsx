@@ -18,8 +18,8 @@ const StyledCradle = Theme(
 
 const StyledUIContainer = styled.div.attrs(props => ({
     style: {
-        // Should this actually be visibility hidden for the sake of animations?
-        display: props.screenLayer < 2 ? "block" : "none",
+        // Visibility and *not* display for the sake of the animations.
+        visibility: props.screenLayer < 2 ? "visible" : "hidden",
         width: props.width,
         height: props.height,
         left: props.x,

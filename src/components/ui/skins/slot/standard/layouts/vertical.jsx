@@ -1,16 +1,18 @@
 import React from "react";
 
+import Group from "./group";
+
 export default function VerticalLayout(...children) {
     return [
-        <g key="auto-config-container" transform="translate(8, 0)">
+        <Group key="auto-config-container" x={8} y={0} size={48}>
             {children[0]}
-        </g>,
-        <g key="spin-container" transform="translate(0, 54)">
+        </Group>,
+        <Group key="spin-container" x={0} y={54} size={64}>
             {children[1]}
-        </g>,
-        <g key="bet-config-container" transform="translate(8, 124)">
+        </Group>,
+        <Group key="bet-config-container" x={8} y={124} size={48}>
             {children[2]}
-        </g>,
+        </Group>,
     ];
 }
 

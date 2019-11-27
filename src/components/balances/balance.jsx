@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { TweenMax } from "gsap";
 
 import ScaledText from "../common/scaled-text";
 
@@ -28,14 +29,25 @@ const StyledBalance = styled.div`
     }
 `;
 
-export default function Balance({ title, value }) {
+export default function Balance({ title, value, animated = false }) {
+    const [displayValue, setDisplayValue] = React.useState(0);
+
+    React.useEffect(() => {
+        if (animated) {
+            // TODO: Tween
+            setDisplayValue(value);
+        } else {
+            setDisplayValue(value);
+        }
+    }, [animated, value]);
+
     return (
         <StyledBalance className="balance">
             <div className="title">
                 <ScaledText>{title}</ScaledText>
             </div>
             <div className="value">
-                <ScaledText>{value}</ScaledText>
+                <ScaledText>{displayValue}</ScaledText>
             </div>
         </StyledBalance>
     );

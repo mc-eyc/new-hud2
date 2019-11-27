@@ -19,8 +19,9 @@ export default function useTransitions(targetRefs, anims) {
         (from, to) => {
             const key = animKey(from, to);
             if (animations[key]) {
-                const tl = animations[key](refs);
-                setTimeline(tl);
+                setTimeline(animations[key](refs));
+            } else if (animations[to]) {
+                setTimeline(animations[to](refs));
             }
         },
         () => {

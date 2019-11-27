@@ -13,6 +13,14 @@ const StyledLayout = styled.svg.attrs(props => ({
 }))`
     .balances {
         height: 100%;
+
+        .title {
+            max-height: 12px;
+        }
+
+        .value {
+            max-height: 12px;
+        }
     }
 `;
 

@@ -39,7 +39,7 @@ const defaultTheme = {
     // UI
     ui: {
         color: "white",
-        background: "rgba(0, 0, 0, 0.95)",
+        background: "black",
     },
     screen: {
         background: "black",

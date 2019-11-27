@@ -45,6 +45,7 @@ const StyledMenu = styled.div`
     select {
         background-color: rgba(0, 0, 0, 0.5);
         color: white;
+        margin-right: 1em;
 
         option {
             background-color: black;
@@ -95,6 +96,7 @@ export function Menu({
     setUIAuto,
     setUIPlatform,
     setUIInverted,
+    updateSkinData,
     setUIActivity,
     updateTitle,
     goToScreen,
@@ -141,9 +143,20 @@ export function Menu({
                         <input type="checkbox" checked={ui.inverted} onChange={e => setUIInverted(e.target.checked)} />
                         <label>Inverted</label>
                         <select value={ui.activity} onChange={e => setUIActivity(e.target.value)}>
-                            {["default", "spin", "freeSpin"].map(opt => (
-                                <option key={`activity-${opt}`} value={opt}>
-                                    {opt}
+                            {["default", "spin", "autoSpinConfig", "autoSpinSelected", "betConfig", "freeSpin"].map(
+                                opt => (
+                                    <option key={`activity-${opt}`} value={opt}>
+                                        {opt}
+                                    </option>
+                                )
+                            )}
+                        </select>
+                        <select
+                            value={ui.data.spins || 0}
+                            onChange={e => updateSkinData({ spins: parseInt(e.target.value, 10) })}>
+                            {[0, 9, 99, 999, 9999, 99999, 999999].map(s => (
+                                <option key={`spin-${s}`} value={s}>
+                                    {s}
                                 </option>
                             ))}
                         </select>
@@ -227,6 +240,7 @@ export default connect(
         setUIInverted: inverted => dispatch({ type: "ui.setInverted", inverted }),
         setUIActivity: activity => dispatch({ type: "ui.setActivity", activity }),
         updateUILayout: opts => dispatch({ type: "ui.updateLayout", ...opts }),
+        updateSkinData: data => dispatch({ type: "ui.updateSkinData", data }),
         toggleScreen: screen => dispatch({ type: "screens.toggle", screen }),
         goToScreen: screen => dispatch({ type: "screens.setActiveScreen", screen }),
     })
