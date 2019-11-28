@@ -1,6 +1,7 @@
 import React from "react";
 
 import useTransitionRef from "../../../../hooks/use-transition-ref";
+import ButtonBody from "./common/button-body";
 
 export default React.forwardRef(function BetConfig(props, forwardRef) {
     const [ref, skin, toggles] = useTransitionRef(forwardRef);
@@ -17,8 +18,7 @@ const chooseSkin = (skin, data = {}, toggles = {}) => {
         case "close":
             return (
                 <>
-                    <circle className="ui-bg theme-fill" cx="24" cy="24" r="24" />
-                    <circle className="ui-fg theme-stroke" cx="24" cy="24" r="23" strokeWidth="2" fill="none" />
+                    <ButtonBody size={48} />
                     <g transform="translate(24, 24) rotate(45)">
                         <line
                             className="ui-fg theme-stroke"
@@ -46,8 +46,7 @@ const chooseSkin = (skin, data = {}, toggles = {}) => {
         default:
             return (
                 <>
-                    <circle className="ui-bg theme-fill" cx="24" cy="24" r="24" />
-                    <circle className="ui-fg theme-stroke" cx="24" cy="24" r="23" strokeWidth="2" fill="none" />
+                    <ButtonBody size={48} />
                     <g transform="translate(-4, -2) scale(0.75)">
                         <g transform="translate(38, 25)">
                             <ellipse fill="white" cx="0" cy="0" rx="18" ry="10" />

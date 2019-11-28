@@ -59,6 +59,9 @@ export default function Theme(Cradle) {
                 &.theme-fill {
                     fill: ${props => props.theme.ui.color};
                 }
+                &.theme-color {
+                    color: ${props => props.theme.ui.color};
+                }
             }
 
             .ui-bg {
@@ -67,6 +70,9 @@ export default function Theme(Cradle) {
                 }
                 &.theme-fill {
                     fill: ${props => props.theme.ui.background};
+                }
+                &.theme-color {
+                    color: ${props => props.theme.ui.background};
                 }
             }
         }
