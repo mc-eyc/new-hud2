@@ -40,7 +40,7 @@ export default function Layouts(props) {
 }
 
 // Determine the orientation of the HUD
-const orientation = (w, h) => (h > w && h >= 400 ? "portrait" : "landscape");
+const orientation = (w, h) => (h / w > 1.3 && h >= 400 ? "portrait" : "landscape");
 
 // Determine which HUD to display
 const chooseLayout = (w, h) => {

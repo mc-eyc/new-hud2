@@ -14,6 +14,7 @@ const StyledTitle = styled.div.attrs(props => ({
     top: 0;
     margin: 0px;
     padding: 0px;
+    overflow: hidden;
 
     .scaled-text {
         position: absolute;

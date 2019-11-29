@@ -34,16 +34,6 @@ const StyledLayout = styled.svg.attrs(props => ({
     .balances {
         height: ${props => props.balancesHeight - props.stroke}px;
         align-content: center;
-
-        .balance {
-            .title {
-                max-height: 22px;
-                white-space: nowrap;
-            }
-            .value {
-                max-height: 26px;
-            }
-        }
     }
 `;
 

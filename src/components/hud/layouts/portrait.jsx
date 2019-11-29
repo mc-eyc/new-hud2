@@ -29,30 +29,12 @@ const StyledLayout = styled.svg.attrs(props => ({
 
     .balances:first-child {
         height: 60%;
-        font-size: 90%;
         margin-bottom: 4px;
-
-        .title {
-            max-height: 22px;
-        }
-
-        .value {
-            max-height: 24px;
-        }
     }
 
     .balances:last-child {
         height: 40%;
-        font-size: 60%;
         justify-content: center;
-
-        .title {
-            max-height: 18px;
-        }
-
-        .value {
-            max-height: 20px;
-        }
     }
 `;
 

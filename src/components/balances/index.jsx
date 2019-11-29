@@ -19,7 +19,7 @@ export default function Balances(props) {
     return (
         <StyledBalances className="balances">
             {balances.map((b, i) => (
-               <Balance key={`bl-${i}`} {...b} />
+                <Balance key={`bl-${i}`} {...b} />
             ))}
         </StyledBalances>
     );

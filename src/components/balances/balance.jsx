@@ -11,7 +11,8 @@ const StyledBalance = styled.div`
     flex-direction: column;
     align-items: center;
 
-    .title, .value {
+    .title,
+    .value {
         width: 100%;
         text-align: center;
     }
@@ -19,12 +20,10 @@ const StyledBalance = styled.div`
     .title {
         text-transform: uppercase;
         font-weight: bold;
-        flex-basis: 40%;
         height: 40%;
     }
 
     .value {
-        flex-basis: 60%;
         height: 60%;
     }
 `;

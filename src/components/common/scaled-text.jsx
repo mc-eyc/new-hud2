@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useMemo, useState, useLayoutEffect } from "react";
 import styled from "styled-components";
+import bowser from "bowser";
 
 const StyledText = styled.svg`
     overflow: visible;
@@ -45,6 +46,13 @@ export default function ScaledText(props) {
     const textRef = useRef(null);
     const str = props.children.toString();
     const [textRenderer, setTextRenderer] = useState(null);
+    const [isEdge, setIsEdge] = useState(false);
+
+    // Setup the Edge and Firefox state detection
+    useEffect(() => {
+        const browserName = bowser.getParser(window.navigator.userAgent).getBrowserName();
+        setIsEdge(browserName === "Microsoft Edge");
+    }, []);
 
     // Initialise the off screen text renderer as well as provide for its removal
     useEffect(() => {
@@ -68,7 +76,7 @@ export default function ScaledText(props) {
 
     return (
         <StyledText className="scaled-text" width="100%" height="100%" viewBox={viewBox}>
-            <text x="50%" y="50%" alignmentBaseline="central" dominantBaseline="central" ref={textRef}>
+            <text x="50%" y="50%" dy={isEdge ? "1ex" : "0%"} textAnchor="middle" alignmentBaseline="central" dominantBaseline={"central"} ref={textRef}>
                 {str}
             </text>
         </StyledText>
