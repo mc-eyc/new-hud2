@@ -53,7 +53,13 @@ export default function UI(props) {
             // Get global position of the UI ref
             const uiBounds = ref.current.getBoundingClientRect();
             // Calculate the safe area for the screen
-            updateZone("screenLayer1", calcSafeArea({ parent: globalParent, child: uiBounds }));
+            updateZone(
+                "screenLayer1",
+                calcSafeArea({
+                    parent: globalParent,
+                    child: { width: uiBounds.width, height: uiBounds.height, x: uiBounds.left, y: uiBounds.top },
+                })
+            );
         }
     }, [activeScreen, bounds, uiZone, stageZone, viewportZone, updateZone, ref]);
 

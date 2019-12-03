@@ -40,22 +40,23 @@ const StyledWindow = styled(Rnd)`
 
 export function Window(props) {
     const [baseWidth, baseHeight] = [800, 600];
-    const [viewportGeom, setViewportGeom] = useState({ width: baseWidth, height: baseHeight });
+    const [viewportGeom, setViewportGeom] = useState({ width: baseWidth, height: baseHeight, x:0, y: 0 });
     return (
         <StyledWindow
             default={{
-                x: window.innerWidth / 2 - baseWidth / 2,
+                x: window.innerWidth / 2 - baseWidth / 2 + 150,
                 y: window.innerHeight / 2 - (baseHeight / 2) * 0.8,
                 width: baseWidth,
                 height: baseHeight,
             }}
             onResize={(e, dir, ref) => {
-                const { width, height, x, y } = ref.getBoundingClientRect();
+                const { width, height, left: x, top: y } = ref.getBoundingClientRect();
+                console.log(width, height, x, y);
                 setViewportGeom({ width, height });
                 props.updateZone("viewport", { width, height, x, y });
             }}
             onDrag={(e, { node }) => {
-                const { width, height, x, y } = node.getBoundingClientRect();
+                const { width, height, left: x, top: y } = node.getBoundingClientRect();
                 props.updateZone("viewport", { width, height, x, y });
             }}>
             <div className="size">

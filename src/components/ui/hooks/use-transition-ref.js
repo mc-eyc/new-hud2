@@ -1,5 +1,6 @@
 import React from "react";
 
+// TODO: Should this accept a set of conditions too?
 export default function useTransitionRef(ref, helpers = {}) {
     const elementRef = React.useRef();
     const [skin, setSkin] = React.useState("default");

@@ -39,7 +39,7 @@ export default function Cradle(props) {
     const { updateZone } = props;
     useEffect(() => {
         if (updateZone) {
-            const { x, y } = ref.current.getBoundingClientRect();
+            const { left: x, top: y } = ref.current.getBoundingClientRect();
             updateZone("viewport", { x, y, width, height });
             updateZone("screenLayer0", { width, height });
         }
