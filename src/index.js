@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createDevTools } from "redux-devtools";
-import Inspector from "redux-devtools-inspector";
 import LogMonitor from "redux-devtools-log-monitor";
 
 import "./styles.scss";

@@ -51,7 +51,6 @@ export function Window(props) {
             }}
             onResize={(e, dir, ref) => {
                 const { width, height, left: x, top: y } = ref.getBoundingClientRect();
-                console.log(width, height, x, y);
                 setViewportGeom({ width, height });
                 props.updateZone("viewport", { width, height, x, y });
             }}
